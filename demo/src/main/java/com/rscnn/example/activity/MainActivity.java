@@ -2,8 +2,10 @@ package com.rscnn.example.activity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.renderscript.RenderScript;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import com.rscnn.network.ConvNet;
 import com.rscnn.network.DetectResult;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import com.rscnn.utils.PhotoViewHelper;
 
@@ -27,12 +30,22 @@ public class MainActivity extends AppCompatActivity {
 
     private RenderScript rs;
     private ObjectDetector detector = null;
+    private String modelPath = "mobilenet-ssd";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         rs = RenderScript.create(this);
         try {
-            detector = new MobileNetSSD(rs, null, "/sdcard/mobilenet-ssd");
+            AssetManager assetManager = getAssets();
+            String[] fileList = assetManager.list(modelPath);
+            if (fileList.length != 0){
+                detector = new MobileNetSSD(rs, assetManager, modelPath);
+            }
+            else {
+                String modelDir = Environment.getExternalStorageDirectory().getPath() + "/" + modelPath;
+                detector = new MobileNetSSD(rs, null, modelDir);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

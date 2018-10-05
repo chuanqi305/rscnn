@@ -58,9 +58,14 @@ class LayerParser {
             filePath = paramPrefix + "-" + i + ".dat";
             byte[] array;
             if(useAsset){
-                InputStream inputStream = asset.open(filePath);
-                array = new byte[inputStream.available()];
-                inputStream.read(array);
+                try {
+                    InputStream inputStream = asset.open(filePath);
+                    array = new byte[inputStream.available()];
+                    inputStream.read(array);
+                }
+                catch (IOException e) {
+                    break;
+                }
             }
             else {
                 File f = new File(filePath);

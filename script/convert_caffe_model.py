@@ -2,8 +2,8 @@ import numpy as np
 import sys,os  
 import cv2
 import argparse
-caffe_root = '/home/yaochuanqi/work/pva-faster-rcnn/caffe-fast-rcnn/'
-sys.path.insert(0, caffe_root + 'python')  
+caffe_root = '/home/yaochuanqi/work/ssd/caffe'
+sys.path.insert(0, os.path.join(caffe_root, 'python'))
 import caffe  
 
 def get_aligned(c):
@@ -12,7 +12,6 @@ def get_aligned(c):
     if c % 4 != 0:
         return c + 4 - c % 4
     return c
-
 
 def get_layer_names(net):
     all_layer_names = []
@@ -103,6 +102,6 @@ if __name__ == '__main__':
     FLAGS, unparsed = parser.parse_known_args()
 
     net = caffe.Net(FLAGS.model, FLAGS.weights, caffe.TEST)  
-
     convert_net(net, FLAGS.savedir)
+    os.system("cp " + FLAGS.model + " " + FLAGS.savedir)
 
