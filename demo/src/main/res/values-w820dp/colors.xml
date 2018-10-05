@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="lightWhite">#88ffffff</color>
+    <color name="yellow_green">#00E7FF</color>
+    <color name="background_light">#3E3E3E</color>
+    <color name="background_black">#333333</color>
+    <color name="black">#000000</color>
+
+    <color name="gray">#B5B5B6</color>
+    <color name="grays">#898989</color>
+    <color name="recommend">#F39800</color>
+    <color name="title">#262626</color>
+    <color name="background">#f6efef</color>
+
+    <color name="div_color">#535355</color>
+
+    <color name="dialog_bg">#f5f5f5</color>
+    <color name="float_dialog_bg">#5A000000</color>
+    <color name="shadow">#25808080</color>
+    <color name="grey_plug">#808080</color>
+    <color name="triangle">#aa72d572</color>
+    <color name="circle">#aa738ffe</color>
+    <color name="rect">#aae84e40</color>
+    <color name="view_bg">#00000000</color>
+    <color name="connect_mode_background">#222831</color>
+    <color name="main_color">#00e7ff</color>
+    <color name="bt_in_background">#424242</color>
+    <color name="color_999999">#999999</color>
+
+    <color name="seek_bar">#00e7ff</color>
+
+
+
+</resources>
