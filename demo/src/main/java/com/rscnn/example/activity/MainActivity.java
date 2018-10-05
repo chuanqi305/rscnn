@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         rs = RenderScript.create(this);
         try {
-            detector = new PvaLite(rs, null, "/sdcard/pvalite");
+            detector = new MobileNetSSD(rs, null, "/sdcard/mobilenet-ssd");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,6 +46,24 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
+    private Bitmap cropImage(Bitmap image) {
+        int height = image.getHeight();
+        int width = image.getWidth();
+        int newHeight = height;
+        int newWidth = width;
+        int x = 0;
+        int y = 0;
+        if (height > width) {
+            newHeight = width;
+            y = (height - newHeight) / 2;
+        }
+        else {
+            newWidth = height;
+            x = (width - newWidth) / 2;
+        }
+        return Bitmap.createBitmap(image, x, y, newWidth, newHeight);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
@@ -55,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
             ContentResolver resolver = this.getContentResolver();
             Uri uri = data.getData();
             Bitmap bmp = MediaStore.Images.Media.getBitmap(resolver, uri);
+            Bitmap image = cropImage(bmp);
             ImageView img = (ImageView) findViewById(R.id.imageView);
-            List<DetectResult> result = detector.detect(bmp);
-            Bitmap toDraw = PhotoViewHelper.drawTextAndRect(bmp, result);
+            List<DetectResult> result = detector.detect(image);
+            Bitmap toDraw = PhotoViewHelper.drawTextAndRect(image, result);
             img.setImageBitmap(toDraw);
         } catch (IOException e) {
             e.printStackTrace();

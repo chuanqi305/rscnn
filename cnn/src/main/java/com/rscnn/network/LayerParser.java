@@ -5,6 +5,7 @@ import android.renderscript.RenderScript;
 import android.util.ArraySet;
 import android.util.Log;
 
+import com.rscnn.layers.Data;
 import com.rscnn.layers.Input;
 import com.rscnn.utils.LogUtil;
 import java.io.File;
@@ -501,6 +502,7 @@ class LayerParser {
                 inputShapes = new ArrayList<>();
                 inputShapes.add((LinkedHashMap)map.get("input_shape"));
             }
+
             for(int i=0;i<inputs.size();i++)
             {
                 String inputName = inputs.get(i);
@@ -509,6 +511,10 @@ class LayerParser {
                 LayerGraph inputGraph = new LayerGraph();
                 loadInputLayer(inputGraph, input, inputName, inputShape);
                 layerList.add(inputGraph);
+                if (inputGraph.getCurrentLayer() instanceof Data) {
+                    Data dataLayer = (Data)inputGraph.getCurrentLayer();
+                    ((Input)inputLayer).setDim(dataLayer.getDim());
+                }
             }
         }
 
@@ -702,8 +708,8 @@ class LayerParser {
     }
     public LayerGraph parseFromRawDataOnStorage(String protoFile, String dataDir) throws IOException {
         baseDir = dataDir;
+        LogUtil.i(TAG, "proto file is " + protoFile);
         InputStream is = new FileInputStream(protoFile);
-
         LayerGraph layer = parse(is);
         is.close();
         return layer;

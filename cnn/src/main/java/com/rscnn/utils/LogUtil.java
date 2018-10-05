@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class LogUtil {
 
-	private static boolean DEBUG = false;
+	private static boolean DEBUG = true;
 
 	public static void setDEBUG(boolean DEBUG) {
 		LogUtil.DEBUG = DEBUG;

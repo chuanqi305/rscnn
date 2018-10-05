@@ -9,6 +9,10 @@ public class Data extends Layer {
         this.dim = dim;
     }
 
+    public int[] getDim() {
+        return dim;
+    }
+
     private float[] padChannel4(float[] input){
         int len = input.length;
         int blocks = len / 3;
